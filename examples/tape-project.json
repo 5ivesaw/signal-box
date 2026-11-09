@@ -1,0 +1,137 @@
+{
+  "source": "test-pattern.mp4",
+  "effects": {
+    "chroma_bleed": {
+      "enabled": true,
+      "strength": 0.5,
+      "locked": false,
+      "asset": "",
+      "start": 0.0,
+      "end": null,
+      "roi": [
+        0.55,
+        0.2,
+        0.25,
+        0.5
+      ]
+    },
+    "chroma_delay": {
+      "enabled": true,
+      "strength": 0.5,
+      "locked": false,
+      "asset": "",
+      "start": 0.0,
+      "end": null,
+      "roi": [
+        0.55,
+        0.2,
+        0.25,
+        0.5
+      ]
+    },
+    "tracking": {
+      "enabled": true,
+      "strength": 0.5,
+      "locked": false,
+      "asset": "",
+      "start": 0.0,
+      "end": null,
+      "roi": [
+        0.55,
+        0.2,
+        0.25,
+        0.5
+      ]
+    },
+    "head_switch": {
+      "enabled": true,
+      "strength": 0.5,
+      "locked": false,
+      "asset": "",
+      "start": 0.0,
+      "end": null,
+      "roi": [
+        0.55,
+        0.2,
+        0.25,
+        0.5
+      ]
+    },
+    "tape_dropout": {
+      "enabled": true,
+      "strength": 0.5,
+      "locked": false,
+      "asset": "",
+      "start": 0.0,
+      "end": null,
+      "roi": [
+        0.55,
+        0.2,
+        0.25,
+        0.5
+      ]
+    },
+    "wow": {
+      "enabled": true,
+      "strength": 0.5,
+      "locked": false,
+      "asset": "",
+      "start": 0.0,
+      "end": null,
+      "roi": [
+        0.55,
+        0.2,
+        0.25,
+        0.5
+      ]
+    },
+    "flutter": {
+      "enabled": true,
+      "strength": 0.5,
+      "locked": false,
+      "asset": "",
+      "start": 0.0,
+      "end": null,
+      "roi": [
+        0.55,
+        0.2,
+        0.25,
+        0.5
+      ]
+    },
+    "hiss": {
+      "enabled": true,
+      "strength": 0.5,
+      "locked": false,
+      "asset": "",
+      "start": 0.0,
+      "end": null,
+      "roi": [
+        0.55,
+        0.2,
+        0.25,
+        0.5
+      ]
+    },
+    "composite": {
+      "enabled": true,
+      "strength": 0.35,
+      "locked": false,
+      "asset": "",
+      "start": 0.0,
+      "end": null,
+      "roi": [
+        0.55,
+        0.2,
+        0.25,
+        0.5
+      ]
+    }
+  },
+  "seed": 1967,
+  "width": 640,
+  "fps": 0.0,
+  "threads": 2,
+  "crf": 18,
+  "schema": 1
+}

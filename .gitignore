@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.venv/
+.dependency-cache/
+.signalbox-cache/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.coverage
+*.signalbox.json
+signalbox-project.json
+signalbox-render.*
+.DS_Store
