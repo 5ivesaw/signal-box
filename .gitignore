@@ -12,3 +12,6 @@ dist/
 signalbox-project.json
 signalbox-render.*
 .DS_Store
+
+# Optional local copies of upstream browser runtimes; public site uses pinned CDNs.
+web/vendor/

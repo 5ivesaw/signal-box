@@ -90,8 +90,8 @@ class FrameEngine:
                     self.fixed[k]=fixed_rng.normal(0,1,(h,w,1)).astype(np.float32) if k=='noise_freeze' else fixed_rng.normal(0,1,(1,w,1)).astype(np.float32)
                 noise=self.fixed[k]
             elif k=='chroma_noise':
-                noise=rng.normal(0,1,(max(1,h//16),max(1,w//16),3)).astype(np.float32)
-                noise=np.repeat(np.repeat(noise,17,0),17,1)[:h,:w]
+                noise=rng.normal(0,1,((h+15)//16,(w+15)//16,3)).astype(np.float32)
+                noise=np.repeat(np.repeat(noise,16,0),16,1)[:h,:w]
                 return f+blur(noise,4)*a*.13
             else:noise=rng.normal(0,1,(h,w,1)).astype(np.float32)
             amp=.012+a*.09

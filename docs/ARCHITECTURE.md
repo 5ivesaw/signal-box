@@ -1,10 +1,10 @@
-# Architecture and future website
+# Architecture
 
-Signalbox is an engine with two frontends: curses and a scriptable CLI. It does
+Signal Box shares its catalog, schema and DSP across curses, CLI and browser frontends. The native engine does
 not depend on a terminal, web framework, GPU runtime or GUI toolkit to render.
 
 ```text
-TUI / CLI / future HTTP job worker
+TUI / CLI / Python API
               |
        signalbox.api
               |
@@ -59,7 +59,7 @@ normalized region and optional asset. Effect IDs are stable extension points.
 7. Apply a final audio peak ceiling, track timing, and mux MP4/MKV. Publish output
    atomically without overwriting existing media by default; write a manifest.
 
-Canonical order is fixed in v0.1. Arbitrary drag-to-reorder, multi-track timelines,
+Canonical order is fixed in v0.2. Arbitrary drag-to-reorder, multi-track timelines,
 keyframed regions and node graphs are future work. Select All runs every selected
 stage, even when later stages visually mask earlier ones. Empty asset slots and
 unavailable codecs fail preflight with their names, never silently disappear.
@@ -84,21 +84,33 @@ files. Complex filters should keep their state bounded or explicitly report cost
 Optional external models should become separately installable backends with their
 own download accounting and capability checks, not hidden runtime downloads.
 
-## Website implementation path
+## Browser implementation
 
-Reuse this package inside background worker processes. An HTTP layer should:
+`web/` is a buildless static application. `scripts/build_web.py` exports the canonical
+catalog and packages Python modules into `engine.zip`. `signalbox.browser` adapts
+the original FrameEngine, audio synthesis, FFmpeg filter recipes and recommendation
+scorer to buffers passed through a Pyodide worker. It does not emulate those effects
+with unrelated CSS or canvas filters.
 
-- accept uploads into per-user job directories and translate opaque file IDs into
-  paths controlled by the service;
-- expose catalog/project validation and submit immutable project snapshots;
-- relay `Job.emit` events over SSE/WebSocket and expose cancellation;
-- serve completed preview MP4s, render outputs, and manifests;
-- apply per-job runtime, disk, memory and concurrency limits, and clean expired
-  uploads/previews;
-- keep FFmpeg patched and isolate media decoders as untrusted-file workers;
-- use authenticated asset ownership checks rather than accepting arbitrary server
-  paths, FFmpeg arguments, Python expressions or shell commands.
+`engine.js` orchestrates the Python worker and a separate single-thread FFmpeg WASM
+worker. Local File objects are mounted read-only with WORKERFS. Decoded picture
+chunks are limited to two seconds or roughly 24 MB, whichever is smaller. The
+Python engine preserves temporal history between chunks. Intermediate chunks use
+H.264 CRF 14, 4:4:4 before filters and final encoding; this extra generation means
+browser and native output are not pixel-identical. Audio currently uses bounded
+in-memory PCM, unlike the native disk-backed implementation.
 
-A browser frontend can use the same IDs, settings, reasons and project JSON.
-No TUI code needs porting. There is no HTTP server or deployment in this release;
-this is the reusable foundation, not a claim that a website was already built.
+Adaptive analysis examines every decoded frame at 160×96 and all audio at 16 kHz,
+using incremental statistics. Browser cut times use the average source cadence;
+VFR cut timing is approximate. Analysis and rendering use workers so controls remain
+responsive. Cancellation terminates both workers; the next job reloads the engine.
+
+The browser sends no media to a server. Only runtime code and site assets are
+fetched. No COOP/COEP headers or SharedArrayBuffer are required, allowing ordinary
+GitHub Pages hosting. Runtime versions and limitations are in BROWSER.md.
+
+New Python effects should also be exercised through `tests/test_browser_bridge.py`
+and the browser diagnostic page. Update generated browser assets after changing
+the catalog, presets, schema or shared modules. Browser codec stages have an
+explicit JavaScript orchestration adapter, so new codec recipes need both native
+and browser implementations.

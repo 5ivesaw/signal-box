@@ -1,0 +1,1 @@
+{"name":"signal-box-web","version":"0.2.0","private":true,"type":"module","scripts":{"check":"node --check app.js && node --check engine.js && node --check ffmpeg-worker.js && node --check python-worker.js && node --check diagnostics.js"}}

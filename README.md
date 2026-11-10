@@ -1,6 +1,6 @@
-# Signalbox
+# Signal Box
 
-A signal-first video degradation workbench with a fast terminal interface.
+A local video degradation workbench for your **browser and terminal**.
 Composite bandwidth, tape timing, film damage, temporal errors, actual codec
 generations, controlled bitstream damage, and audio degradation. No REC/battery
 UI decoration and no fake CRT scanline overlay.
@@ -11,7 +11,33 @@ Some advanced techniques accept externally prepared material; Signalbox does not
 claim to generate acting, AI hallucinations or true face tracking with a filter.
 See [the full catalog](docs/CATALOG.md) and [coverage and limitations](docs/COVERAGE.md).
 
-## Run
+## Open the browser studio
+
+**[Launch Signal Box →](https://5ivesaw.github.io/signal-box/)** · [Browse the catalog](docs/CATALOG.md) · [How it works](docs/ARCHITECTURE.md)
+
+Open a video, browse the searchable library, then preview an effect or your whole
+chain. Motion previews use your actual source. Choose adaptive analysis, a seeded
+chaos combination, a preset, or every effect; all choices remain individually editable.
+Lock included or excluded effects to protect them from automatic selection.
+
+The site is static GitHub Pages: **no account, backend, media upload or hosting
+subscription**. Rendering runs in dedicated browser workers using the same Python
+picture/audio models through Pyodide and FFmpeg WebAssembly. The first render or
+analysis loads about **69 MB** of pinned runtime files from jsDelivr. Your video and
+assets stay on your device. Browser caching determines whether subsequent visits
+need another download.
+
+Start with a short 480-pixel preview. A recent desktop browser is recommended;
+WebAssembly is considerably slower than native FFmpeg and has tighter memory
+limits. The full catalog is browsable, but the browser codec build does not contain
+every native dependency. Unsupported stages and missing assets are named before
+rendering; effects are never silently omitted. See [browser support and limits](docs/BROWSER.md).
+
+Save project JSON and download your finished MP4 plus its settings manifest.
+Saved projects contain settings and filenames, not video data: reselect local
+media after opening a project or returning to the page. Keep separate media backups.
+
+## Run the terminal app
 
 Requires Python 3.10+, FFmpeg/FFprobe, NumPy, SciPy, and a terminal with curses.
 Linux and macOS are the intended platforms. Use WSL on Windows. FFplay is optional
@@ -34,7 +60,8 @@ The optional installer reuses existing packages or fetches only two binary wheel
 verifies their hashes, and caps application payload downloads at **200 MB**, leaving
 100 MB below the requested total budget. It never compiles source dependencies or
 fetches model weights. Python, pip/venv, FFmpeg and terminal support are foundational
-prerequisites supplied separately. **Development downloaded 0 bytes of dependencies.**
+prerequisites supplied separately. The native app reused installed dependencies; the optional browser runtime fetched
+during development totals **68,849,742 bytes**.
 See [installation and resource budgets](docs/INSTALL.md).
 
 For an installed command, in your chosen environment:
@@ -43,6 +70,19 @@ For an installed command, in your chosen environment:
 python3 -m pip install --no-deps --no-build-isolation -e .
 signalbox tui /path/to/video.mp4
 ```
+
+## Choose your workspace
+
+| | Browser studio | Terminal / CLI |
+| --- | --- | --- |
+| Setup | Open the site; runtime loads on demand | Python, FFmpeg, NumPy, SciPy |
+| Media | Local File objects; no upload | Local filesystem; no upload |
+| Selection | Search, categories, bulk toggles, locks | Live search, categories, shortcuts, locks |
+| Preview | Adjustable moving MP4 in the page | Moving MP4 plus optional FFplay |
+| Automatic mode | Whole-source measurements and reasons | Whole-source measurements and reasons |
+| Long renders | Limited by browser memory | Disk-backed intermediates |
+| Project | Shared JSON schema + saved seed | Shared JSON schema + saved seed |
+| Codec coverage | Pinned WASM build; explicit checks | Installed FFmpeg build; explicit checks |
 
 ## TUI workflow
 
@@ -104,25 +144,33 @@ and asset files cannot be overwritten, even with that flag.
 A six-second synthetic source, tape demonstration, and editable project are in
 `examples/`. Try `./signalbox-run tui --project examples/tape-project.json`.
 
-## GitHub backup and development
+## Source, backup and development
 
-This folder is a standalone MIT-licensed repository with `pyproject.toml`, tests,
-GitHub Actions, an issue template, `.gitignore`, and architecture documentation.
-It is ready to commit and push to a GitHub repository you own. Nothing has been
-uploaded to GitHub automatically. To back up using GitHub CLI after creating an
-initial commit (a ZIP extraction needs `git init`, `git add .`, and `git commit` first):
+The complete source lives in **[5ivesaw/signal-box](https://github.com/5ivesaw/signal-box)**.
+Clone it to recover the app on another machine:
 
 ```sh
-gh repo create Signalbox --private --source=. --remote=origin --push
+git clone https://github.com/5ivesaw/signal-box.git
+cd signal-box
+./signalbox-run doctor
 ```
 
-Change `--private` to `--public` if you want a public release. Media, saved private
-projects and generated renders are not needed in the source repository. Keep
-separate backups of your original videos and assets.
+The MIT-licensed application includes the Python package, browser frontend, tests,
+portable examples, contributor guide, and GitHub Actions for tests and Pages.
+The shared catalog and project schema keep improvements reusable across frontends.
+No web framework, npm dependency tree, model weights, or build service is needed.
 
-For a future website, import `signalbox.api` from a background job worker; the
-catalog, JSON project, renderer, previews, analysis, progress and cancellation are
-independent of curses. See [architecture](docs/ARCHITECTURE.md).
+```sh
+python3 scripts/build_web.py       # regenerate shared catalog + Python archive
+python3 scripts/fetch_web_runtime.py  # optional: ~69 MB for local development
+python3 -m http.server 8766 --directory web
+# Open http://localhost:8766
+```
+
+Localhost uses the optional vendored runtimes; the public site loads pinned CDN
+runtimes. Vendor files are ignored by Git. Pushes to `main` deploy the static site
+after the checks pass. See [architecture](docs/ARCHITECTURE.md),
+[contributing](CONTRIBUTING.md), and [third-party notices](docs/THIRD_PARTY.md).
 
 ## Verify
 

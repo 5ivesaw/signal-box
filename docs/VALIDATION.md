@@ -45,8 +45,28 @@ A missing optional encoder is reported as unavailable, not a passing codec test.
 For full Select All, supply an audio/video asset to each asset-dependent entry.
 
 No full-length personal video, actual EliteBook 840 G3, macOS/WSL installation,
-network-restricted fresh dependency installation, or GitHub-hosted CI run was
-available for validation. CI configuration is included but has not been run on
-GitHub. Long videos, codec builds, malformed files and extreme parameter stacks
+network-restricted fresh dependency installation, was available for validation. Long videos, codec builds, malformed files and extreme parameter stacks
 can expose further issues. The code and issue template are supplied for continued
 improvement.
+
+
+## Browser port (v0.2)
+
+- 23 native/bridge unittest methods pass, including shared picture/audio math,
+  temporal history across chunks, incremental analysis, authored time windows,
+  and a non-multiple-of-16 raster regression found during browser testing.
+- A real studio preview downloaded and was independently inspected by ffprobe:
+  H.264 + AAC, 480×270, exactly 1.0 seconds.
+- Browser whole-source analysis examined all 144 frames of the six-second fixture.
+- A 192-entry built-in picture/filter/audio/timing stack completed in WASM/Pyodide.
+  The unavailable Rubber Band filter was explicitly excluded for that test.
+- 21 of 23 codec entries passed browser encode/decode round trips. GSM and Codec2
+  are explicitly unavailable. Opus passed using the native FFmpeg Opus encoder.
+- All 42 authored slots completed a combined browser render using synthetic assets.
+  This validates compositing/mixing, not the authenticity of external AI or speech.
+- Browser UI checks covered search, focused previews, locks, chaos and all 258
+  selections. The synthetic diagnostic page provides repeatable engine checks.
+
+The native all-258 stress test above is separate from browser coverage. Runtime
+versions and memory limits are documented in BROWSER.md; native success does not
+imply a particular browser has enough memory or the same codec libraries.

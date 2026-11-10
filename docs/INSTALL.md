@@ -14,8 +14,12 @@ pip exposes the `signalbox` command in the chosen environment.
 
 ## Download accounting
 
-Development used installed libraries/tools: **0 bytes downloaded for dependencies**.
-The application never downloads anything at render or preview time.
+The native implementation reused installed libraries/tools. The browser runtime
+vendor script fetched **68,849,742 bytes** during development. Production browsers
+fetch approximately 69 MB on first use from pinned official package CDN URLs.
+Native rendering never downloads anything; browser runtime caching is controlled
+by the browser. Do not combine repeated fresh runtime downloads and optional
+installers without accounting for their sum under a metered data budget.
 
 `scripts/bootstrap.py` is optional and explicit. If NumPy/SciPy are importable it
 exits with zero downloads. Otherwise it fetches pinned binary wheels (NumPy 2.2.6,
