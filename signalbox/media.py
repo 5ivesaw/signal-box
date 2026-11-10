@@ -90,6 +90,20 @@ def probe(path):
             'format':info.get('format',{}),'video_index':v.get('index',0)}
 
 
+def parse_capability_table(text, kind):
+    values=set()
+    for line in text.splitlines():
+        parts=line.split()
+        if len(parts)<2 or parts[1]=='=':continue
+        if kind=='filters':
+            # FFmpeg removed the command-support flag in newer releases.
+            # The input/output signature is stable across both listing formats.
+            valid=len(parts)>=3 and '->' in parts[2]
+        else:valid=len(parts[0])==6 and parts[0][0] in 'VAS'
+        if valid:values.add(parts[1])
+    return values
+
+
 _CAPS={}
 def capabilities():
     if _CAPS:return _CAPS
@@ -98,7 +112,7 @@ def capabilities():
         p=subprocess.run(['ffmpeg','-hide_banner',*args],capture_output=True,text=True,timeout=30)
         text=p.stdout+'\n'+p.stderr
         if key=='bsfs':values=set(line.strip() for line in text.splitlines())
-        else:values={parts[1] for line in text.splitlines() if len(parts:=line.split())>=2 and len(parts[0]) in (3,6)}
+        else:values=parse_capability_table(text,key)
         _CAPS[key]=values
     return _CAPS
 

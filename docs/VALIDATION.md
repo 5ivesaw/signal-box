@@ -52,9 +52,9 @@ improvement.
 
 ## Browser port (v0.2)
 
-- 23 native/bridge unittest methods pass, including shared picture/audio math,
+- 24 native/bridge unittest methods pass, including shared picture/audio math,
   temporal history across chunks, incremental analysis, authored time windows,
-  and a non-multiple-of-16 raster regression found during browser testing.
+  old/new FFmpeg capability tables, and a non-multiple-of-16 raster regression found during browser testing.
 - A real studio preview downloaded and was independently inspected by ffprobe:
   H.264 + AAC, 480×270, exactly 1.0 seconds.
 - Browser whole-source analysis examined all 144 frames of the six-second fixture.

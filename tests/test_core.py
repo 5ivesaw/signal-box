@@ -9,6 +9,15 @@ from signalbox.frame import FrameEngine
 from signalbox.audio import synth,process_audio,RATE
 from signalbox.analysis import chaos,select_all,apply_auto,recommend
 
+class CapabilityTests(unittest.TestCase):
+    def test_old_and_new_ffmpeg_filter_listings(self):
+        from signalbox.media import parse_capability_table
+        old=' TSC highpass A->A Apply highpass\n ... fps V->V Force fps\n T.. = Timeline'
+        new=' TS highpass A->A Apply highpass\n .. fps V->V Force fps\n T.. = Timeline'
+        self.assertEqual(parse_capability_table(old,'filters'),{'highpass','fps'})
+        self.assertEqual(parse_capability_table(new,'filters'),{'highpass','fps'})
+        self.assertEqual(parse_capability_table(' V..... = Video\n V....D libx264 encoder','encoders'),{'libx264'})
+
 class ModelTests(unittest.TestCase):
     def test_roundtrip_and_unknown_version(self):
         p=Project(source='source.mp4');p.set('wow');p.effects['wow'].locked=True
