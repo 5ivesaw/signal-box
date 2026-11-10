@@ -74,3 +74,6 @@ imply a particular browser has enough memory or the same codec libraries.
 
 GitHub Actions passed the Python 3.10/3.12 native suite and Pages build/deployment.
 A preview also rendered successfully from the public Pages URL with CDN runtimes.
+
+The app layout was visually checked at 1280×720 and in a 390×844 CSS-pixel
+iframe; narrow-screen panel navigation, effect search and the inspector passed.

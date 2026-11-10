@@ -11,6 +11,8 @@ Some advanced techniques accept externally prepared material; Signalbox does not
 claim to generate acting, AI hallucinations or true face tracking with a filter.
 See [the full catalog](docs/CATALOG.md) and [coverage and limitations](docs/COVERAGE.md).
 
+![Signal Box browser studio](docs/assets/studio.png)
+
 ## Open the browser studio
 
 **[Launch Signal Box →](https://5ivesaw.github.io/signal-box/)** · [Browse the catalog](docs/CATALOG.md) · [How it works](docs/ARCHITECTURE.md)
