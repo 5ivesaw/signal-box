@@ -65,8 +65,12 @@ improvement.
 - All 42 authored slots completed a combined browser render using synthetic assets.
   This validates compositing/mixing, not the authenticity of external AI or speech.
 - Browser UI checks covered search, focused previews, locks, chaos and all 258
-  selections. The synthetic diagnostic page provides repeatable engine checks.
+  selections; the workspace revision adds verified Shift-click ranges, range
+  checkbox toggles, keyboard extension, batch actions, undo/redo and context menus. The synthetic diagnostic page provides repeatable engine checks.
 
 The native all-258 stress test above is separate from browser coverage. Runtime
 versions and memory limits are documented in BROWSER.md; native success does not
 imply a particular browser has enough memory or the same codec libraries.
+
+GitHub Actions passed the Python 3.10/3.12 native suite and Pages build/deployment.
+A preview also rendered successfully from the public Pages URL with CDN runtimes.

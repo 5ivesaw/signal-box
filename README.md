@@ -20,6 +20,10 @@ chain. Motion previews use your actual source. Choose adaptive analysis, a seede
 chaos combination, a preset, or every effect; all choices remain individually editable.
 Lock included or excluded effects to protect them from automatic selection.
 
+The app workspace includes **Shift-click range selection, Ctrl/Cmd-click multiple
+selection, batch actions, an effect context menu, undo/redo, and a searchable
+command palette**. Press **?** for shortcuts or **Ctrl/Cmd+K** for commands.
+
 The site is static GitHub Pages: **no account, backend, media upload or hosting
 subscription**. Rendering runs in dedicated browser workers using the same Python
 picture/audio models through Pyodide and FFmpeg WebAssembly. The first render or

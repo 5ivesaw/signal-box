@@ -7,6 +7,30 @@ The inspector exposes strength, locks, supported time windows, regions and asset
 Preview the inspected effect or selected stack over an adjustable interval, then
 render and download an MP4. Save project JSON separately to preserve your choices.
 
+## Editing shortcuts and selection
+
+The studio is a fixed workspace with independently scrolling panels. On narrow
+screens, Library, Monitor and Inspector/chain tabs switch between panels. Help
+and engine notes live in the field manual (`?`), and activity logs in Activity.
+
+- Click an effect to inspect it; tick its checkbox to enable it.
+- Shift-click highlights the contiguous range from the anchor to the clicked row.
+  Ctrl/Cmd-click adds or removes individual rows. Shift-arrow keys extend a range.
+- The + / − / lock controls and right-click menu act on highlighted effects.
+  Shift-clicking a checkbox enables or disables the entire anchored range.
+- Ctrl/Cmd+A highlights the filtered library. Space toggles highlighted effects;
+  Delete disables them, and L locks/unlocks them.
+- Ctrl/Cmd+K opens the searchable command palette. Up/down and Enter run commands.
+- Ctrl/Cmd+Z undoes settings changes; Ctrl/Cmd+Shift+Z redoes them (80 snapshots).
+  Media files are not part of undo history.
+- Ctrl/Cmd+O opens footage; Ctrl/Cmd+S saves project JSON.
+- P previews the inspected effect; Shift+P previews the chain; Ctrl/Cmd+Enter exports.
+- K plays/pauses the monitor. I/O mark source preview start/end at the playhead;
+  J and semicolon seek backward/forward two seconds. Switch to Source before marking.
+- 1/2/3/4 select Library, Monitor, Inspector and Chain panels. `/` focuses search.
+- Inputs retain their native editing shortcuts. Interface labels do not select
+  accidentally when clicking or dragging; input text and activity reports remain copyable.
+
 ## What runs locally
 
 The shared Python picture/audio engine runs through **Pyodide 0.27.7**, NumPy 2.0.2
